@@ -13,7 +13,9 @@ module Rack
     # query strings faster.  Use this rather than the cgi.rb
     # version since it's faster.  (Stolen from Camping).
     def escape(s)
-      s.to_s.gsub(/([^ a-zA-Z0-9_.-]+)/u) {
+      #This regex should be forced to be unicode, why can't this
+      #function escape binary strings?
+      s.to_s.gsub(/([^ a-zA-Z0-9_.-]+)/) {
         '%'+$1.unpack('H2'*bytesize($1)).join('%').upcase
       }.tr(' ', '+')
     end
